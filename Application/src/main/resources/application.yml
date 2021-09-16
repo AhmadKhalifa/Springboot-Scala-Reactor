@@ -1,0 +1,22 @@
+spring:
+  profiles:
+    active: local-development
+  main:
+    web-application-type: reactive
+  datasource:
+    hikari:
+      maximum-pool-size: 100
+
+application:
+  security:
+    permittedEndpoints:
+      - "/users/login"
+    encoder:
+      secretKeyFactoryName: "PBKDF2WithHmacSHA512"
+      secret: "Th15_1s_th3_53Cr3t_4_JWT"
+      iteration: 33
+      keyLength: 256
+    jwt:
+      secret: "ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave512bitsKeySize"
+      expiration: 7776000000 # 3 months
+

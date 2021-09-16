@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'scala'
+}
+
+group = 'com.elmenus'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+allprojects {
+
+    def springBootVersion = '2.5.4'
+    project.ext {
+        springBootVersion = '2.5.4'
+    }
+    version '0.0.1-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+

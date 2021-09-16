@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'scala'
+}
+
+group 'com.elmenus.checkout.gateway'
+
+dependencies {
+    implementation project (":Common")
+    implementation project (":Domain")
+
+    def scalaVersion = '2.13.6'
+    def springVersion = '5.3.9'
+    def springBootVersion = '2.5.4'
+    def junitVersion = '5.7.2'
+    def mapStructVersion = '1.4.0.Final'
+
+    implementation "org.scala-lang:scala-library:${scalaVersion}"
+    implementation "org.springframework:spring-context:${springVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
+
+    implementation "org.mapstruct:mapstruct:${mapStructVersion}"
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapStructVersion}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+}
