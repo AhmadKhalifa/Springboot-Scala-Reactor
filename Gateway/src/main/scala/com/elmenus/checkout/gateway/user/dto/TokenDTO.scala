@@ -1,4 +1,4 @@
-package com.elmenus.checkout.gateway.business.user.dto
+package com.elmenus.checkout.gateway.user.dto
 
 import java.util.Date
 import scala.beans.BeanProperty

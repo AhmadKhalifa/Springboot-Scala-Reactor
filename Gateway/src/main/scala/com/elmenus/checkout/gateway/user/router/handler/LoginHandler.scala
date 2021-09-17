@@ -1,9 +1,9 @@
-package com.elmenus.checkout.gateway.business.user.router.handler
+package com.elmenus.checkout.gateway.user.router.handler
 
 import com.elmenus.checkout.domain.user.usecase.LoginUseCase
 import com.elmenus.checkout.gateway.base.BaseHandlerFunction
-import com.elmenus.checkout.gateway.business.user.dto.{CredentialsDTO, TokenDTO}
-import com.elmenus.checkout.gateway.business.user.mapper.{CredentialsMapper, TokenMapper}
+import com.elmenus.checkout.gateway.user.dto.{CredentialsDTO, TokenDTO}
+import com.elmenus.checkout.gateway.user.mapper.{CredentialsMapper, TokenMapper}
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest

@@ -12,16 +12,16 @@ import reactor.core.scheduler.Scheduler
 abstract class ReactiveJpaRepository[E <: BaseEntity, T <: JpaRepository[E, java.lang.Long]] {
 
     @Autowired
-    protected var transactionTemplate: TransactionTemplate = _
+    var transactionTemplate: TransactionTemplate = _
 
     @Autowired
-    protected var jdbcScheduler: Scheduler = _
+    var jdbcScheduler: Scheduler = _
 
     protected def repository: T
 
     def findById(id: Long): Mono[E] = Mono
         .just(id)
-        .flatMap(id => Mono.defer(() => Mono.fromCallable(() => repository.findById(id))))
+        .flatMap(id => Mono.fromCallable(() => repository.findById(id)))
         .flatMap(optional => if (optional.isPresent) Mono.just(optional.get()) else Mono.empty())
         .subscribeOn(jdbcScheduler)
 

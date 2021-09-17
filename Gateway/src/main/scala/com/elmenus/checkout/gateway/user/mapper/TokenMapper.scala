@@ -1,7 +1,7 @@
-package com.elmenus.checkout.gateway.business.user.mapper
+package com.elmenus.checkout.gateway.user.mapper
 
 import com.elmenus.checkout.domain.authentication.model.Token
-import com.elmenus.checkout.gateway.business.user.dto.TokenDTO
+import com.elmenus.checkout.gateway.user.dto.TokenDTO
 import org.springframework.stereotype.Component
 
 @Component

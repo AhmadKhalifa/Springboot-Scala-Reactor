@@ -1,4 +1,4 @@
-package com.elmenus.checkout.gateway.business.user.router.handler
+package com.elmenus.checkout.gateway.user.router.handler
 
 import org.springframework.beans.factory.annotation.Lookup
 import org.springframework.stereotype.Component

@@ -1,6 +1,6 @@
-package com.elmenus.checkout.gateway.business.user
+package com.elmenus.checkout.gateway.user
 
-import com.elmenus.checkout.gateway.business.user.router.handler.LoginHandlerFactory
+import com.elmenus.checkout.gateway.user.router.handler.LoginHandlerFactory
 import org.springframework.context.annotation.{Bean, Configuration}
 import org.springframework.web.reactive.function.server.RequestPredicates.POST
 import org.springframework.web.reactive.function.server.{RouterFunction, RouterFunctions, ServerResponse}

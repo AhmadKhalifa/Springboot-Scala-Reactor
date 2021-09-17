@@ -1,11 +1,12 @@
 package com.elmenus.checkout.domain.user.data
 
+import com.elmenus.checkout.domain.base.BaseDataService
 import com.elmenus.checkout.domain.user.model.{Credentials, User}
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 
 @Component
-trait UserDataService {
+trait UserDataService extends BaseDataService {
 
     def getByIdentifier(identifier: String): Mono[User]
 

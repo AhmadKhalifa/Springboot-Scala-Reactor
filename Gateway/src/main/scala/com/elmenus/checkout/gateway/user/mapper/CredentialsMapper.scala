@@ -1,7 +1,7 @@
-package com.elmenus.checkout.gateway.business.user.mapper
+package com.elmenus.checkout.gateway.user.mapper
 
 import com.elmenus.checkout.domain.user.model.Credentials
-import com.elmenus.checkout.gateway.business.user.dto.CredentialsDTO
+import com.elmenus.checkout.gateway.user.dto.CredentialsDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component

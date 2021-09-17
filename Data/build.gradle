@@ -13,6 +13,7 @@ dependencies {
     def springVersion = '5.3.9'
     def springBootVersion = '2.5.4'
     def junitVersion = '5.7.2'
+    def reactorVersion =  '3.3.10.RELEASE'
 
     implementation "org.scala-lang:scala-library:${scalaVersion}"
     implementation "org.springframework:spring-context:${springVersion}"
@@ -22,6 +23,13 @@ dependencies {
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
 
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testImplementation "io.projectreactor:reactor-test:${reactorVersion}"
+
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+}
+
+test {
+    useJUnitPlatform()
 }

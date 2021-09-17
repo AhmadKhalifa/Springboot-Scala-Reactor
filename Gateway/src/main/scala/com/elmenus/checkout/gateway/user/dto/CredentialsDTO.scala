@@ -1,4 +1,4 @@
-package com.elmenus.checkout.gateway.business.user.dto
+package com.elmenus.checkout.gateway.user.dto
 
 import javax.validation.constraints.NotBlank
 import scala.beans.BeanProperty
