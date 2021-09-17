@@ -91,7 +91,7 @@ class AuthenticationServiceImpl(jwtProperties: JwtProperties) extends Authentica
                 .setSubject(user.username)
                 .setClaims(new util.TreeMap[String, Object]() {{
                     put(KEY_USER_ID, user.id.toString)
-//                    put(KEY_ROLE, user.role.toString)
+                    put(KEY_ROLE, user.role.toString)
                 }})
                 .setIssuedAt(new Date())
                 .setExpiration(expirationDate)

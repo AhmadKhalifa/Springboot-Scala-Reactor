@@ -10,14 +10,14 @@ import reactor.core.publisher.Mono
 import java.util.Date
 
 @Component
-class TokenExpiryValidator(authenticationDataService: AuthenticationService) extends BaseValidator[String] {
+class TokenExpiryValidator(authenticationService: AuthenticationService) extends BaseValidator[String] {
 
     override def isValid(data: String): Mono[Boolean] = Mono
         .just(data)
-        .flatMap(authenticationDataService.getExpirationDateFromToken)
+        .flatMap(authenticationService.getExpirationDateFromToken)
         .zipWith(
             Mono.defer(() => Mono.just(new Date())),
-            (expirationDate: Date, currentDate: Date) => expirationDate.before(currentDate)
+            (expirationDate: Date, currentDate: Date) => expirationDate.after(currentDate)
         )
 
     override def getValidationErrorException(data: String): BusinessException = new ExpiredTokenException()

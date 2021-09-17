@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 
 @Component
-class TokenExistsValidator extends BaseValidator[String] {
+class TokenExistenceValidator extends BaseValidator[String] {
 
     override def isValid(data: String): Mono[Boolean] = Mono
         .justOrEmpty(data)

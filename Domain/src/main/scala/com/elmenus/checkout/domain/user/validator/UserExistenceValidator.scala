@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 
 @Component
-class UserExistsValidator(userDataService: UserDataService) extends BaseValidator[Credentials] {
+class UserExistenceValidator(userDataService: UserDataService) extends BaseValidator[Credentials] {
 
     override def isValid(data: Credentials): Mono[Boolean] = Mono
         .just(data)
