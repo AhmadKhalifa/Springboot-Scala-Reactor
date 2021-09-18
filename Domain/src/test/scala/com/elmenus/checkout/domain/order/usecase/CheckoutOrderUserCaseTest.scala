@@ -1,7 +1,7 @@
 package com.elmenus.checkout.domain.order.usecase
 
 import com.elmenus.checkout.common.exception.badrequest.{ItemNotAvailableException, OrderTooLargeException, OrderTooSmallException}
-import com.elmenus.checkout.domain.item.data.ItemDataService
+import com.elmenus.checkout.domain.item.data.BasketItemDataService
 import com.elmenus.checkout.domain.order.validator.{OrderItemsAvailableValidator, OrderNotTooLargeValidator, OrderNotTooSmallValidator}
 import com.elmenus.checkout.domain.payment.data.PaymentDataService
 import com.elmenus.checkout.domain.payment.gateway.PaymentGateway
@@ -18,7 +18,7 @@ class CheckoutOrderUserCaseTest extends UseCaseTestSuite[CheckoutOrderUseCase] {
     var userDataService: UserDataService = _
 
     @Mock
-    var itemDataService: ItemDataService = _
+    var basketItemDataService: BasketItemDataService = _
 
     @Mock
     var orderItemsAvailableValidator: OrderItemsAvailableValidator = _
@@ -38,7 +38,7 @@ class CheckoutOrderUserCaseTest extends UseCaseTestSuite[CheckoutOrderUseCase] {
     @BeforeEach
     def injectMocks(): Unit = useCase = new CheckoutOrderUseCase(
         userDataService,
-        itemDataService,
+        basketItemDataService,
         orderItemsAvailableValidator,
         orderNotTooSmallValidator,
         orderNotTooLargeValidator,
@@ -57,11 +57,11 @@ class CheckoutOrderUserCaseTest extends UseCaseTestSuite[CheckoutOrderUseCase] {
         val payment = DataFactory.generatePayment()
 
         when(userDataService.getById(userId)).thenReturnMono(user)
-        when(itemDataService.getCartItems(user)).thenReturnMono(basketItems)
+        when(basketItemDataService.getAllBasketItemsForUser(user)).thenReturnMono(basketItems)
         when(orderItemsAvailableValidator.validate(basketItems)).thenReturnMono(basketItems)
         when(orderNotTooSmallValidator.validate(basketItems)).thenReturnMono(basketItems)
         when(orderNotTooLargeValidator.validate(basketItems)).thenReturnMono(basketItems)
-        when(itemDataService.getCartItemsSubtotal(basketItems)).thenReturnMono(amount)
+        when(basketItemDataService.calculateSubtotal(basketItems)).thenReturnMono(amount)
         when(paymentGateway.initializePayment(userId, amount)).thenReturnMono(payment)
         when(paymentDataService.save(payment)).thenReturnMono(payment)
 
@@ -81,7 +81,7 @@ class CheckoutOrderUserCaseTest extends UseCaseTestSuite[CheckoutOrderUseCase] {
         val exception = new ItemNotAvailableException()
 
         when(userDataService.getById(userId)).thenReturnMono(user)
-        when(itemDataService.getCartItems(user)).thenReturnMono(basketItems)
+        when(basketItemDataService.getAllBasketItemsForUser(user)).thenReturnMono(basketItems)
         when(orderItemsAvailableValidator.validate(basketItems)).thenReturnErrorMono(exception)
         when(orderNotTooSmallValidator.validate(basketItems)).thenReturnMono(basketItems)
         when(orderNotTooLargeValidator.validate(basketItems)).thenReturnMono(basketItems)
@@ -99,7 +99,7 @@ class CheckoutOrderUserCaseTest extends UseCaseTestSuite[CheckoutOrderUseCase] {
         val exception = new OrderTooSmallException()
 
         when(userDataService.getById(userId)).thenReturnMono(user)
-        when(itemDataService.getCartItems(user)).thenReturnMono(basketItems)
+        when(basketItemDataService.getAllBasketItemsForUser(user)).thenReturnMono(basketItems)
         when(orderItemsAvailableValidator.validate(basketItems)).thenReturnMono(basketItems)
         when(orderNotTooSmallValidator.validate(basketItems)).thenReturnErrorMono(exception)
         when(orderNotTooLargeValidator.validate(basketItems)).thenReturnMono(basketItems)
@@ -117,7 +117,7 @@ class CheckoutOrderUserCaseTest extends UseCaseTestSuite[CheckoutOrderUseCase] {
         val exception = new OrderTooLargeException()
 
         when(userDataService.getById(userId)).thenReturnMono(user)
-        when(itemDataService.getCartItems(user)).thenReturnMono(basketItems)
+        when(basketItemDataService.getAllBasketItemsForUser(user)).thenReturnMono(basketItems)
         when(orderItemsAvailableValidator.validate(basketItems)).thenReturnMono(basketItems)
         when(orderNotTooSmallValidator.validate(basketItems)).thenReturnMono(basketItems)
         when(orderNotTooLargeValidator.validate(basketItems)).thenReturnErrorMono(exception)

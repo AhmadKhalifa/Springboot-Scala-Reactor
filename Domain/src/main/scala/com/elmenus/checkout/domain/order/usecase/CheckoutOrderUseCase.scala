@@ -1,7 +1,7 @@
 package com.elmenus.checkout.domain.order.usecase
 
 import com.elmenus.checkout.domain.base.BaseUseCase
-import com.elmenus.checkout.domain.item.data.ItemDataService
+import com.elmenus.checkout.domain.item.data.BasketItemDataService
 import com.elmenus.checkout.domain.order.validator.{OrderItemsAvailableValidator, OrderNotTooLargeValidator, OrderNotTooSmallValidator}
 import com.elmenus.checkout.domain.payment.data.PaymentDataService
 import com.elmenus.checkout.domain.payment.gateway.PaymentGateway
@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono
 
 @Component
 class CheckoutOrderUseCase(userDataService: UserDataService,
-                           itemDataService: ItemDataService,
+                           basketItemDataService: BasketItemDataService,
                            orderItemsAvailableValidator: OrderItemsAvailableValidator,
                            orderNotTooSmallValidator: OrderNotTooSmallValidator,
                            orderNotTooLargeValidator: OrderNotTooLargeValidator,
@@ -27,13 +27,13 @@ class CheckoutOrderUseCase(userDataService: UserDataService,
             Mono.
                 just(userId)
                 .flatMap(userDataService.getById)
-                .flatMap(itemDataService.getCartItems)
+                .flatMap(basketItemDataService.getAllBasketItemsForUser)
                 .validate(
                     orderItemsAvailableValidator,
                     orderNotTooSmallValidator,
                     orderNotTooLargeValidator
                 )
-                .flatMap(itemDataService.getCartItemsSubtotal)
+                .flatMap(basketItemDataService.calculateSubtotal)
         ))
         .flatMap(userIdAndAmount => paymentGateway.initializePayment(userIdAndAmount.getT1, userIdAndAmount.getT2))
         .flatMap(paymentDataService.save)

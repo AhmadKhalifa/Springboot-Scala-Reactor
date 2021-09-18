@@ -1,4 +1,4 @@
-create table user_items
+create table basket_items
 (
     id       int(11) auto_increment primary key,
     user_id  int(11) not null,

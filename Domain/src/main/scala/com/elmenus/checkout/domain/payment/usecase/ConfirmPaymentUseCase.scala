@@ -1,10 +1,10 @@
 package com.elmenus.checkout.domain.payment.usecase
 
 import com.elmenus.checkout.domain.base.BaseUseCase
+import com.elmenus.checkout.domain.order.data.OrderDataService
 import com.elmenus.checkout.domain.payment.data.PaymentDataService
 import com.elmenus.checkout.domain.payment.model.PaymentState
 import com.elmenus.checkout.domain.payment.validator.PaymentIsPendingValidator
-import com.elmenus.checkout.domain.item.data.OrderDataService
 import com.elmenus.checkout.domain.order.model.Order
 import com.elmenus.checkout.domain.user.data.UserDataService
 import org.springframework.stereotype.Component

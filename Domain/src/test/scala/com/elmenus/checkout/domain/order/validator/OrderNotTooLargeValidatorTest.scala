@@ -1,7 +1,7 @@
 package com.elmenus.checkout.domain.order.validator
 
 import com.elmenus.checkout.common.exception.badrequest.OrderTooLargeException
-import com.elmenus.checkout.domain.item.data.ItemDataService
+import com.elmenus.checkout.domain.item.data.BasketItemDataService
 import com.elmenus.checkout.domain.order.properties.OrderProperties
 import com.elmenus.checkout.domain.test.utils.{DataFactory, Utils, ValidatorTestSuite}
 import org.assertj.core.api.Assertions.assertThat
@@ -17,7 +17,7 @@ class OrderNotTooLargeValidatorTest extends ValidatorTestSuite[OrderNotTooLargeV
     private val MAX_AMOUNT = 1500
 
     @Mock
-    var itemDataService: ItemDataService = _
+    var basketItemDataService: BasketItemDataService = _
 
     @BeforeEach
     def injectMocks(): Unit = {
@@ -25,7 +25,7 @@ class OrderNotTooLargeValidatorTest extends ValidatorTestSuite[OrderNotTooLargeV
             minAmount = MIN_AMOUNT
             maxAmount = MAX_AMOUNT
         })
-        ReflectionTestUtils.setField(validator, "itemDataService", itemDataService)
+        ReflectionTestUtils.setField(validator, "basketItemDataService", basketItemDataService)
     }
 
     @Test
@@ -35,7 +35,7 @@ class OrderNotTooLargeValidatorTest extends ValidatorTestSuite[OrderNotTooLargeV
             DataFactory.generateBasketItem(item = DataFactory.generateItem(price = 50)) :: Nil
         val amount = Utils.getTotalAmount(basketItems)
 
-        when(itemDataService.getCartItemsSubtotal(basketItems)).thenReturnMono(amount)
+        when(basketItemDataService.calculateSubtotal(basketItems)).thenReturnMono(amount)
 
         assertThat(amount).isBetween(MIN_AMOUNT, MAX_AMOUNT)
         StepVerifier
@@ -52,7 +52,7 @@ class OrderNotTooLargeValidatorTest extends ValidatorTestSuite[OrderNotTooLargeV
         val amount = Utils.getTotalAmount(basketItems)
         val exceptionClass = classOf[OrderTooLargeException]
 
-        when(itemDataService.getCartItemsSubtotal(basketItems)).thenReturnMono(amount)
+        when(basketItemDataService.calculateSubtotal(basketItems)).thenReturnMono(amount)
 
         assertThat(amount).isGreaterThanOrEqualTo(MAX_AMOUNT)
         StepVerifier

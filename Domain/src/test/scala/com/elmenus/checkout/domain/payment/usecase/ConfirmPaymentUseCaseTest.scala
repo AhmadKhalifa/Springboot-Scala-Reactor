@@ -1,15 +1,15 @@
 package com.elmenus.checkout.domain.payment.usecase
 
 import com.elmenus.checkout.common.exception.badrequest.PaymentNotPendingException
-import com.elmenus.checkout.domain.item.data.OrderDataService
+import com.elmenus.checkout.domain.order.data.OrderDataService
 import com.elmenus.checkout.domain.payment.data.PaymentDataService
-import com.elmenus.checkout.domain.payment.model.{Payment, PaymentState}
+import com.elmenus.checkout.domain.payment.model.PaymentState
 import com.elmenus.checkout.domain.payment.validator.PaymentIsPendingValidator
 import com.elmenus.checkout.domain.test.utils.{DataFactory, UseCaseTestSuite}
 import com.elmenus.checkout.domain.user.data.UserDataService
 import org.junit.jupiter.api.{BeforeEach, Test}
+import org.mockito.Mock
 import org.mockito.Mockito.when
-import org.mockito.{ArgumentCaptor, Captor, Mock}
 import reactor.test.StepVerifier
 
 class ConfirmPaymentUseCaseTest extends UseCaseTestSuite[ConfirmPaymentUseCase] {
@@ -25,9 +25,6 @@ class ConfirmPaymentUseCaseTest extends UseCaseTestSuite[ConfirmPaymentUseCase] 
 
     @Mock
     var orderDataService: OrderDataService = _
-
-    @Captor
-    var paymentCaptor: ArgumentCaptor[Payment] = _
 
     @BeforeEach
     def injectMocks(): Unit = useCase = new ConfirmPaymentUseCase(

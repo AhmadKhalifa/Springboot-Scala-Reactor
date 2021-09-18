@@ -37,8 +37,8 @@ object DataFactory {
     def generateItem(name: String = generateString, price: Double = generateDouble, available: Boolean = true): Item =
         new Item(name, price, available)
 
-    def generateBasketItem(quantity: Int = 1, item: Item = generateItem()): BasketItem =
-        new BasketItem(item, quantity)
+    def generateBasketItem(user: User = generateUser, quantity: Int = 1, item: Item = generateItem()): BasketItem =
+        new BasketItem(user, item, quantity)
 
     def generatePayment(key: String = generateString,
                         amount: Double = generateDouble,

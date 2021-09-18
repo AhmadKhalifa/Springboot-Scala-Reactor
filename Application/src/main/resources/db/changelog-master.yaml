@@ -4,7 +4,7 @@ databaseChangeLog:
   - include:
       file: migration/01-create-items-table.sql
   - include:
-      file: migration/02-create-user-items-table.sql
+      file: migration/02-create-basket-items-table.sql
   - include:
       file: migration/03-create-payments-table.sql
   - include:

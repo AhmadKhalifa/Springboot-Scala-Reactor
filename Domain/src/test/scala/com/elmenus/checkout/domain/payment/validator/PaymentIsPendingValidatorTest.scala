@@ -1,7 +1,7 @@
 package com.elmenus.checkout.domain.payment.validator
 
 import com.elmenus.checkout.common.exception.badrequest.PaymentNotPendingException
-import com.elmenus.checkout.domain.item.data.ItemDataService
+import com.elmenus.checkout.domain.item.data.BasketItemDataService
 import com.elmenus.checkout.domain.payment.model.PaymentState
 import com.elmenus.checkout.domain.test.utils.{DataFactory, ValidatorTestSuite}
 import org.junit.jupiter.api.{BeforeEach, Test}
@@ -11,7 +11,7 @@ import reactor.test.StepVerifier
 class PaymentIsPendingValidatorTest extends ValidatorTestSuite[PaymentIsPendingValidator] {
 
     @Mock
-    var itemDataService: ItemDataService = _
+    var basketItemDataService: BasketItemDataService = _
 
     @BeforeEach
     def injectMocks(): Unit = validator = new PaymentIsPendingValidator()
