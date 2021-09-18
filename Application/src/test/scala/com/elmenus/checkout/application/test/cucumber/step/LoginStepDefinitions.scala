@@ -4,16 +4,9 @@ import com.elmenus.checkout.application.test.cucumber.utils.BaseStepDefinitions
 import com.elmenus.checkout.application.test.utils.DataFactory
 import com.elmenus.checkout.domain.user.model.{User, UserRole}
 import com.elmenus.checkout.gateway.user.UserRouterConfiguration
-import io.cucumber.java.After
 import io.cucumber.java.en.{Given, Then, When}
 
 class LoginStepDefinitions extends BaseStepDefinitions {
-
-    @After
-    def setup(): Unit = {
-        scenarioData.clear()
-        repositories.foreach(_.deleteAll)
-    }
 
     @Given("a {string} is registered into the application with username {string} and password {string}")
     def aIsRegisteredIntoTheApplicationWithUsernameAndPassword(role: String,
