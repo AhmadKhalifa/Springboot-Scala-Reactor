@@ -12,10 +12,10 @@ import reactor.core.scheduler.Scheduler
 abstract class ReactiveJpaRepository[E <: BaseEntity, T <: JpaRepository[E, java.lang.Long]] {
 
     @Autowired
-    var transactionTemplate: TransactionTemplate = _
+    protected var transactionTemplate: TransactionTemplate = _
 
     @Autowired
-    var jdbcScheduler: Scheduler = _
+    protected var jdbcScheduler: Scheduler = _
 
     protected def repository: T
 

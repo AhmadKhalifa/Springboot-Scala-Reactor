@@ -19,10 +19,10 @@ class UserReactiveRepositoryTest extends ReactiveRepositoryTestSuite[UserReactiv
     var userRepository: UserRepository = _
 
     @BeforeEach
-    def injectMocks(): Unit = {
-        reactiveRepository = new UserReactiveRepository(userRepository)
-        injectDependencies()
-    }
+    def injectMocks(): Unit = reactiveRepository = new UserReactiveRepository(userRepository) {{
+        transactionTemplate = UserReactiveRepositoryTest.this.transactionTemplate
+        jdbcScheduler = UserReactiveRepositoryTest.this.jdbcScheduler
+    }}
 
     // findById
 

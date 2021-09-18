@@ -25,9 +25,4 @@ class ReactiveRepositoryTestSuite[T <: ReactiveJpaRepository[_, _]] extends Unit
             answer.getArguments.last.asInstanceOf[TransactionCallback[_]].doInTransaction(null)
         })
     }
-
-    def injectDependencies(): Unit = {
-        reactiveRepository.transactionTemplate = transactionTemplate
-        reactiveRepository.jdbcScheduler = jdbcScheduler
-    }
 }
