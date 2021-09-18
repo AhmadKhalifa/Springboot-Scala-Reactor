@@ -10,7 +10,7 @@ spring:
 application:
   security:
     permittedEndpoints:
-      - "/users/login"
+      - "/users/auth"
     encoder:
       secretKeyFactoryName: "PBKDF2WithHmacSHA512"
       secret: "Th15_1s_th3_53Cr3t_4_JWT"

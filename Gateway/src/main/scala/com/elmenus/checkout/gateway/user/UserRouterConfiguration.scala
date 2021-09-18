@@ -8,12 +8,14 @@ import org.springframework.web.reactive.function.server.{RouterFunction, RouterF
 @Configuration
 class UserRouterConfiguration {
 
-    object Routes {
-        val BASE_URL = "/users"
-        val AUTH = s"$BASE_URL/auth"
-    }
-
     @Bean
     def userRouter(loginHandlerFactory: LoginHandlerFactory): RouterFunction[ServerResponse] = RouterFunctions
-        .route(POST(Routes.AUTH), loginHandlerFactory)
+        .route(POST(UserRouterConfiguration.Endpoints.AUTH), loginHandlerFactory)
+}
+
+object UserRouterConfiguration {
+    object Endpoints {
+        private val BASE_URL = "/users"
+        val AUTH = s"$BASE_URL/auth"
+    }
 }

@@ -7,7 +7,7 @@ import javax.persistence.{Convert, Entity, Table}
 import scala.beans.BeanProperty
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 class User extends BaseEntity {
 
     @BeanProperty
@@ -19,4 +19,11 @@ class User extends BaseEntity {
     @BeanProperty
     @Convert(converter = classOf[UserRoleConverter])
     var role: UserRole.Value = UserRole.CUSTOMER
+
+    def this(username: String, password: String, role: UserRole.Value) {
+        this()
+        this.username = username
+        this.password = password
+        this.role = role
+    }
 }
