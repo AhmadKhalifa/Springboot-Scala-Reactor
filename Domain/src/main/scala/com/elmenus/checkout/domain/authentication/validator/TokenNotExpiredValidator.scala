@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono
 import java.util.Date
 
 @Component
-class TokenExpiryValidator(authenticationService: AuthenticationService) extends BaseValidator[String] {
+class TokenNotExpiredValidator(authenticationService: AuthenticationService) extends BaseValidator[String] {
 
     override def isValid(data: String): Mono[Boolean] = Mono
         .just(data)

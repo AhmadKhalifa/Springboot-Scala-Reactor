@@ -68,7 +68,7 @@ class LoginHandlerTest extends HandlerFunctionTestSuite[LoginHandler] {
 
         StepVerifier
             .create(handler.buildPublisher(request))
-            .verifyErrorMatches(exception.equals(_))
+            .verifyErrorMatches(_ equals exception)
     }
 
     @Test
@@ -84,6 +84,6 @@ class LoginHandlerTest extends HandlerFunctionTestSuite[LoginHandler] {
 
         StepVerifier
             .create(handler.buildPublisher(request))
-            .verifyErrorMatches(exception.equals(_))
+            .verifyErrorMatches(_ equals exception)
     }
 }

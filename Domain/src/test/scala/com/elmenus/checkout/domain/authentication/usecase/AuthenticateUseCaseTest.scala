@@ -3,7 +3,7 @@ package com.elmenus.checkout.domain.authentication.usecase
 import com.elmenus.checkout.common.exception.autorization.{ExpiredTokenException, InvalidTokenException, MissingTokenException}
 import com.elmenus.checkout.common.exception.notfound.UserNotFoundException
 import com.elmenus.checkout.domain.authentication.data.AuthenticationService
-import com.elmenus.checkout.domain.authentication.validator.{TokenExistenceValidator, TokenExpiryValidator, TokenUserValidator}
+import com.elmenus.checkout.domain.authentication.validator.{TokenExistenceValidator, TokenNotExpiredValidator, TokenUserValidator}
 import com.elmenus.checkout.domain.test.utils.{DataFactory, UseCaseTestSuite}
 import org.junit.jupiter.api.{BeforeEach, Test}
 import org.mockito.Mock
@@ -19,7 +19,7 @@ class AuthenticateUseCaseTest extends UseCaseTestSuite[AuthenticateUseCase] {
     var tokenExistenceValidator: TokenExistenceValidator = _
 
     @Mock
-    var tokenExpiryValidator: TokenExpiryValidator = _
+    var tokenNotExpiredValidator: TokenNotExpiredValidator = _
 
     @Mock
     var tokenUserValidator: TokenUserValidator = _
@@ -28,7 +28,7 @@ class AuthenticateUseCaseTest extends UseCaseTestSuite[AuthenticateUseCase] {
     def injectMocks(): Unit = useCase = new AuthenticateUseCase(
         authenticationService,
         tokenExistenceValidator,
-        tokenExpiryValidator,
+        tokenNotExpiredValidator,
         tokenUserValidator
     )
 
@@ -38,7 +38,7 @@ class AuthenticateUseCaseTest extends UseCaseTestSuite[AuthenticateUseCase] {
         val jwtAuthentication = DataFactory.generateJwtAuthentication
 
         when(tokenExistenceValidator.validate(token)).thenReturnMono(token)
-        when(tokenExpiryValidator.validate(token)).thenReturnMono(token)
+        when(tokenNotExpiredValidator.validate(token)).thenReturnMono(token)
         when(tokenUserValidator.validate(token)).thenReturnMono(token)
         when(authenticationService.authenticate(token)).thenReturnMono(jwtAuthentication)
 
@@ -54,12 +54,12 @@ class AuthenticateUseCaseTest extends UseCaseTestSuite[AuthenticateUseCase] {
         val exception = new MissingTokenException()
 
         when(tokenExistenceValidator.validate(token)).thenReturnErrorMono(exception)
-        when(tokenExpiryValidator.validate(token)).thenReturnMono(token)
+        when(tokenNotExpiredValidator.validate(token)).thenReturnMono(token)
         when(tokenUserValidator.validate(token)).thenReturnMono(token)
 
         StepVerifier
             .create(useCase.build(AuthenticateUseCase.Parameters(token)))
-            .verifyErrorMatches(exception.equals(_))
+            .verifyErrorMatches(_ equals exception)
     }
 
     @Test
@@ -68,12 +68,12 @@ class AuthenticateUseCaseTest extends UseCaseTestSuite[AuthenticateUseCase] {
         val exception = new ExpiredTokenException()
 
         when(tokenExistenceValidator.validate(token)).thenReturnMono(token)
-        when(tokenExpiryValidator.validate(token)).thenReturnErrorMono(exception)
+        when(tokenNotExpiredValidator.validate(token)).thenReturnErrorMono(exception)
         when(tokenUserValidator.validate(token)).thenReturnMono(token)
 
         StepVerifier
             .create(useCase.build(AuthenticateUseCase.Parameters(token)))
-            .verifyErrorMatches(exception.equals(_))
+            .verifyErrorMatches(_ equals exception)
     }
 
     @Test
@@ -82,12 +82,12 @@ class AuthenticateUseCaseTest extends UseCaseTestSuite[AuthenticateUseCase] {
         val exception = new InvalidTokenException()
 
         when(tokenExistenceValidator.validate(token)).thenReturnMono(token)
-        when(tokenExpiryValidator.validate(token)).thenReturnErrorMono(exception)
+        when(tokenNotExpiredValidator.validate(token)).thenReturnErrorMono(exception)
         when(tokenUserValidator.validate(token)).thenReturnMono(token)
 
         StepVerifier
             .create(useCase.build(AuthenticateUseCase.Parameters(token)))
-            .verifyErrorMatches(exception.equals(_))
+            .verifyErrorMatches(_ equals exception)
     }
 
     @Test
@@ -97,11 +97,11 @@ class AuthenticateUseCaseTest extends UseCaseTestSuite[AuthenticateUseCase] {
         val exception = new InvalidTokenException(rootException = new UserNotFoundException(username))
 
         when(tokenExistenceValidator.validate(token)).thenReturnMono(token)
-        when(tokenExpiryValidator.validate(token)).thenReturnMono(token)
+        when(tokenNotExpiredValidator.validate(token)).thenReturnMono(token)
         when(tokenUserValidator.validate(token)).thenReturnErrorMono(exception)
 
         StepVerifier
             .create(useCase.build(AuthenticateUseCase.Parameters(token)))
-            .verifyErrorMatches(exception.equals(_))
+            .verifyErrorMatches(_ equals exception)
     }
 }

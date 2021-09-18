@@ -8,6 +8,8 @@ import reactor.core.publisher.Mono
 @Component
 trait UserDataService extends BaseDataService {
 
+    def getById(id: Long): Mono[User]
+
     def getByIdentifier(identifier: String): Mono[User]
 
     def userExists(identifier: String): Mono[Boolean]

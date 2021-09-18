@@ -9,6 +9,8 @@ import reactor.core.publisher.Mono
 @Service
 class UserDataServiceImpl(userReactiveRepository: UserReactiveRepository) extends UserDataService {
 
+    def getById(id: Long): Mono[User] = userReactiveRepository.findById(id)
+
     override def getByIdentifier(identifier: String): Mono[User] = userReactiveRepository.findByUsername(identifier)
 
     override def userExists(identifier: String): Mono[Boolean] = userReactiveRepository.existsByUsername(identifier)

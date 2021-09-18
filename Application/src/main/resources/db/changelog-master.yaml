@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - include:
+      file: migration/00-create-users-table.sql
+  - include:
+      file: migration/01-create-items-table.sql
+  - include:
+      file: migration/02-create-user-items-table.sql
+  - include:
+      file: migration/03-create-payments-table.sql
+  - include:
+      file: migration/04-create-orders-table.sql

@@ -6,8 +6,13 @@ spring:
   datasource:
     hikari:
       maximum-pool-size: 100
+  liquibase:
+    change-log: classpath:db/migration/changelog-master.yaml
 
 application:
+  order:
+    minAmount: 100
+    maxAmount: 1500
   security:
     permittedEndpoints:
       - "/users/auth"
@@ -19,4 +24,3 @@ application:
     jwt:
       secret: "ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave512bitsKeySize"
       expiration: 7776000000 # 3 months
-

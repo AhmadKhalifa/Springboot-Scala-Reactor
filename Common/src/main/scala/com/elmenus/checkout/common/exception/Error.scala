@@ -18,4 +18,8 @@ object Error extends Enumeration {
     val UnprocessableEntity: Type = Type(9, HttpStatus.UNPROCESSABLE_ENTITY)
     val InvalidBody: Type = Type(10, HttpStatus.BAD_REQUEST)
     val IncorrectPassword: Type = Type(11, HttpStatus.BAD_REQUEST)
+    val ItemNotAvailable: Type = Type(12, HttpStatus.BAD_REQUEST)
+    val OrderTooSmall: Type = Type(13, HttpStatus.BAD_REQUEST)
+    val OrderTooLarge: Type = Type(14, HttpStatus.BAD_REQUEST)
+    val PaymentNotPending: Type = Type(15, HttpStatus.NOT_ACCEPTABLE)
 }

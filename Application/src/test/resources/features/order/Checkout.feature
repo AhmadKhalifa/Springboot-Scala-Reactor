@@ -22,7 +22,7 @@ Feature: Checkout
       | Mix cheese pizza | 2        | 150            | true              |
       | Pepsi can        | 5        | 10             | false             |
     When customer checks-out the basket
-    Then an error is returned to the user with status code 400, minor code 10, and a message "Sorry, Pepsi can is not available, let's try something else"
+    Then an error is returned to the user with status code 400, minor code 10, and a message "Sorry, one or more items are not available, let's try something else"
 
   Scenario: 2.2. Checkout with an invalid basket (more than one item not available)
     Given customer has the following items in basket
@@ -30,7 +30,7 @@ Feature: Checkout
       | Mix cheese pizza | 2        | 150            | false             |
       | Pepsi can        | 5        | 10             | false             |
     When customer checks-out the basket
-    Then an error is returned to the user with status code 400, minor code 10, and a message "Sorry, Mix cheese pizza and Pepsi can are not available, let's try something else"
+    Then an error is returned to the user with status code 400, minor code 10, and a message "Sorry, one or more items are not available, let's try something else"
 
   Scenario: 3. Checkout with an invalid basket (total Quantity is less than the minimum)
     Given customer has the following items in basket

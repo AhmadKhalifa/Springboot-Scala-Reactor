@@ -1,3 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: changelog/00-create-table-user.sql

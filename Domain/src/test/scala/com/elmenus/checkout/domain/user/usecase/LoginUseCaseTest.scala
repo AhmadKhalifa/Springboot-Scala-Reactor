@@ -60,7 +60,7 @@ class LoginUseCaseTest extends UseCaseTestSuite[LoginUseCase] {
 
         StepVerifier
             .create(useCase.build(LoginUseCase.Parameters(credentials)))
-            .verifyErrorMatches(exception.equals(_))
+            .verifyErrorMatches(_ equals exception)
     }
 
     @Test
@@ -72,6 +72,6 @@ class LoginUseCaseTest extends UseCaseTestSuite[LoginUseCase] {
 
         StepVerifier
             .create(useCase.build(LoginUseCase.Parameters(credentials)))
-            .verifyErrorMatches(exception.equals(_))
+            .verifyErrorMatches(_ equals exception)
     }
 }

@@ -8,13 +8,13 @@ import org.mockito.Mock
 import org.mockito.Mockito.when
 import reactor.test.StepVerifier
 
-class TokenExpiryValidatorTest extends ValidatorTestSuite[TokenExpiryValidator] {
+class TokenNotExpiredValidatorTest extends ValidatorTestSuite[TokenNotExpiredValidator] {
 
     @Mock
     var authenticationService: AuthenticationService = _
 
     @BeforeEach
-    def injectMocks(): Unit = validator = new TokenExpiryValidator(authenticationService)
+    def injectMocks(): Unit = validator = new TokenNotExpiredValidator(authenticationService)
 
     @Test
     def `Given non-expired token, when validator validates it, then it should pass the validation`(): Unit = {

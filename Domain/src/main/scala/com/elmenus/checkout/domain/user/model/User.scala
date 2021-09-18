@@ -20,7 +20,7 @@ class User extends BaseEntity {
     @Convert(converter = classOf[UserRoleConverter])
     var role: UserRole.Value = UserRole.CUSTOMER
 
-    def this(username: String, password: String, role: UserRole.Value) {
+    def this(username: String, password: String, role: UserRole.Value) = {
         this()
         this.username = username
         this.password = password
