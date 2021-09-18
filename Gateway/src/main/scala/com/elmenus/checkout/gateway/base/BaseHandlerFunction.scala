@@ -24,7 +24,7 @@ abstract class BaseHandlerFunction[T] extends HandlerFunction[ServerResponse] {
 
     protected def responseClassName: String
 
-    protected def buildPublisher(request: ServerRequest): Publisher[T]
+    def buildPublisher(request: ServerRequest): Publisher[T]
 
     final override def handle(request: ServerRequest): Mono[ServerResponse] = {
         this.request = request

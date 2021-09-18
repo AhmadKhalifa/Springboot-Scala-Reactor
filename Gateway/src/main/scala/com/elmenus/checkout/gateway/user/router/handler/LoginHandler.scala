@@ -19,7 +19,7 @@ class LoginHandler(loginUseCase: LoginUseCase,
 
     override protected def responseClassName: String = TokenDTO.getClass.getName
 
-    override protected def buildPublisher(request: ServerRequest): Mono[TokenDTO] =
+    override def buildPublisher(request: ServerRequest): Mono[TokenDTO] =
         requestBody(classOf[CredentialsDTO])
             .map(credentialsMapper.fromDto)
             .map(LoginUseCase.Parameters(_))
