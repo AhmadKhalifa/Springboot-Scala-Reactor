@@ -8,9 +8,7 @@ import com.elmenus.checkout.gateway.utils.{DataFactory, HandlerFunctionTestSuite
 import org.junit.jupiter.api.{BeforeEach, Test}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mock
-import org.mockito.Mockito.{doNothing, mock, when}
-import org.springframework.test.util.ReflectionTestUtils
-import org.springframework.validation.Validator
+import org.mockito.Mockito.when
 import reactor.test.StepVerifier
 
 class LoginHandlerTest extends HandlerFunctionTestSuite[LoginHandler] {
@@ -31,9 +29,7 @@ class LoginHandlerTest extends HandlerFunctionTestSuite[LoginHandler] {
             credentialsMapper,
             tokenMapper
         )
-        val defaultValidator = mock(classOf[Validator])
-        doNothing().when(defaultValidator).validate(any(), any())
-        ReflectionTestUtils.setField(handler, "defaultValidator", defaultValidator)
+        initHandler()
     }
 
     @Test

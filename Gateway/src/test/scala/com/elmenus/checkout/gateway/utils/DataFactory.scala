@@ -1,7 +1,11 @@
 package com.elmenus.checkout.gateway.utils
 
 import com.elmenus.checkout.domain.authentication.model.{JwtAuthentication, Token}
+import com.elmenus.checkout.domain.item.model.{BasketItem, Item}
+import com.elmenus.checkout.domain.order.model.Order
+import com.elmenus.checkout.domain.payment.model.{Payment, PaymentState}
 import com.elmenus.checkout.domain.user.model.{Credentials, User, UserRole}
+import com.elmenus.checkout.gateway.order.dto.{OrderCheckoutDTO, PaymentDTO, PaymentUpdatesDTO, PaymentUpdatesResponseDTO}
 import com.elmenus.checkout.gateway.user.dto.{CredentialsDTO, TokenDTO}
 
 import java.util.{Date, UUID}
@@ -25,22 +29,56 @@ object DataFactory {
         new Credentials(username, password)
 
     def generateCredentialsDto(identifier: String = generateString, pass: String = generateString): CredentialsDTO =
-        new CredentialsDTO() {{
-            username = identifier
-            password = pass
-        }}
+        new CredentialsDTO() {
+            {
+                username = identifier
+                password = pass
+            }
+        }
 
     def generateUser(identifier: String = generateString,
                      pass: String = generateString,
-                     userId: Long = generateLong): User = new User() {{
-        username = identifier
-        password = pass
-        id = userId
-        role = UserRole.CUSTOMER
-    }}
+                     userId: Long = generateLong): User = new User() {
+        {
+            username = identifier
+            password = pass
+            id = userId
+            role = UserRole.CUSTOMER
+        }
+    }
 
     def generateJwtAuthentication: JwtAuthentication =
         JwtAuthentication(generateLong, generateString, UserRole.CUSTOMER)
 
     def generateDate(plusDays: Int = 0): Date = new Date(new Date().getTime + (plusDays * ONE_DAY))
+
+    def generateInt: Int = random.nextInt()
+
+    def generateDouble: Double = random.nextDouble()
+
+    def generateItem(name: String = generateString, price: Double = generateDouble, available: Boolean = true): Item =
+        new Item(name, price, available)
+
+    def generateBasketItem(user: User = generateUser(), quantity: Int = 1, item: Item = generateItem()): BasketItem =
+        new BasketItem(user, item, quantity)
+
+    def generatePayment(key: String = generateString,
+                        amount: Double = generateDouble,
+                        state: PaymentState.Value = PaymentState.PENDING) = new Payment(key, amount, state)
+
+    def generateOrder(user: User = generateUser(), payment: Payment = generatePayment()): Order =
+        new Order(user, payment)
+
+    def generatePaymentUpdatesDto(event: String = PaymentUpdatesDTO.Events.SUCCEEDED,
+                                  userId: Long = generateLong,
+                                  key: String = generateString): PaymentUpdatesDTO =
+        new PaymentUpdatesDTO(userId, key, event)
+
+    def generatePaymentUpdatesResponseDTO: PaymentUpdatesResponseDTO = new PaymentUpdatesResponseDTO()
+
+    def generateOrderCheckoutDTO(userId: Long = generateLong): OrderCheckoutDTO = new OrderCheckoutDTO(userId)
+
+    def generatePaymentDto(key: String = generateString,
+                           amount: Double = generateDouble,
+                           state: PaymentState.Value = PaymentState.PENDING) = new PaymentDTO(key, amount, state)
 }

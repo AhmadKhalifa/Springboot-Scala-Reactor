@@ -2,7 +2,6 @@ package com.elmenus.checkout.data.payment.repository
 
 import com.elmenus.checkout.data.test.utils.{DataFactory, ReactiveRepositoryTestSuite}
 import com.elmenus.checkout.domain.payment.model.Payment
-import com.elmenus.checkout.domain.user.model.User
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.{BeforeEach, Test}
 import org.mockito.Mockito.{times, verify, when}
