@@ -11,5 +11,5 @@ class OrderNotTooSmallValidator(orderProperties: OrderProperties) extends OrderA
 
     override def isValidAmount(amount: Double): Boolean = amount >= orderProperties.minAmount
 
-    override def getValidationErrorException(data: List[BasketItem]): BusinessException = new OrderTooSmallException()
+    override def getValidationErrorException(data: java.util.List[BasketItem]): BusinessException = new OrderTooSmallException()
 }

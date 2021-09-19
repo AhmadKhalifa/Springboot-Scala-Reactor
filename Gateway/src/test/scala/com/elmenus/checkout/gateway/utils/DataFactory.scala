@@ -80,5 +80,5 @@ object DataFactory {
 
     def generatePaymentDto(key: String = generateString,
                            amount: Double = generateDouble,
-                           state: PaymentState.Value = PaymentState.PENDING) = new PaymentDTO(key, amount, state)
+                           state: String = PaymentState.PENDING.toString) = new PaymentDTO(key, amount, state)
 }

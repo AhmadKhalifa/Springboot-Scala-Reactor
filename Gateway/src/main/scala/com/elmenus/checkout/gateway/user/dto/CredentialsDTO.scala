@@ -12,4 +12,10 @@ class CredentialsDTO {
     @NotBlank
     @BeanProperty
     var password: String = _
+
+    def this(username: String, password: String) = {
+        this()
+        this.username = username
+        this.password = password
+    }
 }

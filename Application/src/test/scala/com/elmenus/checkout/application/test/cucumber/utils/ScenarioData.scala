@@ -1,5 +1,7 @@
 package com.elmenus.checkout.application.test.cucumber.utils
 
+import com.elmenus.checkout.application.test.cucumber.utils.ScenarioData.Keys
+import com.elmenus.checkout.domain.user.model.User
 import org.springframework.stereotype.Component
 import org.springframework.test.web.reactive.server.WebTestClient
 import reactor.core.publisher.Mono
@@ -21,6 +23,13 @@ class ScenarioData {
         map(key).asInstanceOf[T]
     }
 
+    def contains[T](key: String): Boolean = try {
+        get[T](key)
+        true
+    } catch {
+        case _: Exception => false
+    }
+
     def set(key: String, value: Any): Unit = map(key) = value
 
     def getMono[T](key: String): Mono[T] = get[Mono[T]](key)
@@ -38,6 +47,8 @@ class ScenarioData {
     def getResponseSpec: WebTestClient.ResponseSpec =
         get[WebTestClient.ResponseSpec](ScenarioData.Keys.RESPONSE_SPEC)
 
+    def currentUser: User = get[User](Keys.CURRENT_USER)
+
     def clear(): Unit = map.clear()
 }
 
@@ -45,5 +56,7 @@ object ScenarioData {
     object Keys {
         val AUTH_TOKEN: String = "AUTH_TOKEN"
         val RESPONSE_SPEC: String = "RESPONSE_SPEC"
+        val CURRENT_USER: String = "CURRENT_USER"
+        val PAYMENT_KEY: String = "PAYMENT_KEY"
     }
 }

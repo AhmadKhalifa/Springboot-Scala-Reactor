@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository
 @Repository
 trait BasketItemRepository extends JpaRepository[BasketItem, java.lang.Long] {
 
-    def findByUser(user: User): List[BasketItem]
+    def findByUser(user: User): java.util.List[BasketItem]
 }

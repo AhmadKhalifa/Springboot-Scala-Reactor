@@ -7,7 +7,6 @@ import scala.beans.BeanProperty
 
 class PaymentUpdatesDTO {
 
-    @NotBlank
     @BeanProperty
     var userId: Long = _
 

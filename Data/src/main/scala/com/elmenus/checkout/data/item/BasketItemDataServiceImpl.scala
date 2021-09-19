@@ -11,6 +11,6 @@ import reactor.core.publisher.Mono
 class BasketItemDataServiceImpl(basketItemReactiveRepository: BasketItemReactiveRepository)
     extends BasketItemDataService {
 
-    override def getAllBasketItemsForUser(user: User): Mono[List[BasketItem]] = basketItemReactiveRepository
+    override def getAllBasketItemsForUser(user: User): Mono[java.util.List[BasketItem]] = basketItemReactiveRepository
         .findByUser(user)
 }

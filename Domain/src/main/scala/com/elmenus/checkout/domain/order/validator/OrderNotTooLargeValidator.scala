@@ -11,5 +11,5 @@ class OrderNotTooLargeValidator(orderProperties: OrderProperties) extends OrderA
 
     override def isValidAmount(amount: Double): Boolean = amount <= orderProperties.maxAmount
 
-    override def getValidationErrorException(data: List[BasketItem]): BusinessException = new OrderTooLargeException()
+    override def getValidationErrorException(data: java.util.List[BasketItem]): BusinessException = new OrderTooLargeException()
 }

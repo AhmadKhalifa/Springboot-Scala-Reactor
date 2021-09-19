@@ -3,7 +3,7 @@ package com.elmenus.checkout.domain.item.model
 import com.elmenus.checkout.domain.base.BaseEntity
 import com.elmenus.checkout.domain.user.model.User
 
-import javax.persistence.{Entity, JoinColumn, ManyToOne, OneToOne, Table}
+import javax.persistence.{Entity, FetchType, JoinColumn, ManyToOne, OneToOne, Table}
 import scala.beans.BeanProperty
 
 @Entity
@@ -11,7 +11,7 @@ import scala.beans.BeanProperty
 class BasketItem extends BaseEntity {
 
     @BeanProperty
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     var user: User = _
 

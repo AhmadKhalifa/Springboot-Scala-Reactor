@@ -5,4 +5,6 @@ import scala.beans.BeanProperty
 
 case class TokenDTO(@BeanProperty token: String,
                     @BeanProperty expirationDate: Date,
-                    @BeanProperty `type`: String = "Bearer")
+                    @BeanProperty `type`: String = "Bearer") {
+    def getFullToken: String = s"${`type`} $token"
+}

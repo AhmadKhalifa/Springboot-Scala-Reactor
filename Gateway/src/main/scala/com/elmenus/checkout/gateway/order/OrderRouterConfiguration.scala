@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.server.{RouterFunction, RouterF
 class OrderRouterConfiguration {
 
     @Bean
-    def userRouter(checkoutOrderHandlerFactory: CheckoutOrderHandlerFactory,
+    def orderRouter(checkoutOrderHandlerFactory: CheckoutOrderHandlerFactory,
                    updateOrderPaymentHandlerFactory: UpdateOrderPaymentHandlerFactory): RouterFunction[ServerResponse] =
         RouterFunctions
             .route(POST(OrderRouterConfiguration.Endpoints.CHECKOUT), checkoutOrderHandlerFactory)

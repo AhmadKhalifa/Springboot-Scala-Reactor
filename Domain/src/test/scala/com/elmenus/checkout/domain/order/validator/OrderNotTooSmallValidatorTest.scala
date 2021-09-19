@@ -11,6 +11,8 @@ import org.mockito.Mockito.when
 import org.springframework.test.util.ReflectionTestUtils
 import reactor.test.StepVerifier
 
+import scala.jdk.CollectionConverters.SeqHasAsJava
+
 class OrderNotTooSmallValidatorTest extends ValidatorTestSuite[OrderNotTooSmallValidator] {
 
     private val MIN_AMOUNT = 100
@@ -30,9 +32,9 @@ class OrderNotTooSmallValidatorTest extends ValidatorTestSuite[OrderNotTooSmallV
 
     @Test
     def `Given a basket with a total exceeding the min limit, when validator validates it, then it should pass the validation`(): Unit = {
-        val basketItems = DataFactory.generateBasketItem(item = DataFactory.generateItem(price = 150)) ::
+        val basketItems = (DataFactory.generateBasketItem(item = DataFactory.generateItem(price = 150)) ::
             DataFactory.generateBasketItem(quantity = 2, item = DataFactory.generateItem(price = 150)) ::
-            DataFactory.generateBasketItem(item = DataFactory.generateItem(price = 50)) :: Nil
+            DataFactory.generateBasketItem(item = DataFactory.generateItem(price = 50)) :: Nil).asJava
         val amount = Utils.getTotalAmount(basketItems)
 
         when(basketItemDataService.calculateSubtotal(basketItems)).thenReturnMono(amount)
@@ -46,7 +48,7 @@ class OrderNotTooSmallValidatorTest extends ValidatorTestSuite[OrderNotTooSmallV
 
     @Test
     def `Given a basket with a total not exceeding the min limit, when validator validates it, then a OrderTooSmallException is thrown`(): Unit = {
-        val basketItems = DataFactory.generateBasketItem(item = DataFactory.generateItem(price = 2)) :: Nil
+        val basketItems = (DataFactory.generateBasketItem(item = DataFactory.generateItem(price = 2)) :: Nil).asJava
         val amount = Utils.getTotalAmount(basketItems)
         val exceptionClass = classOf[OrderTooSmallException]
 

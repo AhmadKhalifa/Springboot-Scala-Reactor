@@ -3,13 +3,14 @@ package com.elmenus.checkout.domain.user.model
 import com.elmenus.checkout.domain.base.BaseEntity
 import com.elmenus.checkout.domain.user.model.converter.UserRoleConverter
 
-import javax.persistence.{Convert, Entity, Table}
+import javax.persistence.{Column, Convert, Entity, Table}
 import scala.beans.BeanProperty
 
 @Entity
 @Table(name = "users")
 class User extends BaseEntity {
 
+    @Column(unique = true)
     @BeanProperty
     var username: String = _
 

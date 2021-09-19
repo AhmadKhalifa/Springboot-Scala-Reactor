@@ -17,7 +17,7 @@ class PaymentMapperTest extends MapperTestSuite[PaymentMapper] {
 
         assertThat(mappedPayment.key).isEqualTo(payment.key)
         assertThat(mappedPayment.amount).isEqualTo(payment.amount)
-        assertThat(mappedPayment.state.id).isEqualTo(payment.state.id)
+        assertThat(mappedPayment.state).isEqualTo(payment.state.toString)
     }
 }
 

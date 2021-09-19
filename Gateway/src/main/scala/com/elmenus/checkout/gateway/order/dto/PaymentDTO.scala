@@ -12,9 +12,9 @@ class PaymentDTO {
     var amount: Double = _
 
     @BeanProperty
-    var state: PaymentState.Value = PaymentState.PENDING
+    var state: String = PaymentState.PENDING.toString
 
-    def this(key: String, amount: Double, state: PaymentState.Value = PaymentState.PENDING) = {
+    def this(key: String, amount: Double, state: String = PaymentState.PENDING.toString) = {
         this()
         this.key = key
         this.amount = amount

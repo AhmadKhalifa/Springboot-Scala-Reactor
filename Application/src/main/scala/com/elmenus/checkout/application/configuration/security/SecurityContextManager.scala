@@ -23,7 +23,7 @@ class SecurityContextManager(authenticationManager: AuthenticationManager)
         .flatMap(webExchange => {
             val tokenOption = Option(webExchange.getRequest.getHeaders.getFirst(HttpHeaders.AUTHORIZATION))
             val token = if (tokenOption.isDefined) tokenOption.get else ""
-            if (token.isEmpty && token.startsWith(AUTH_HEADER_PREFIX)) Mono.just(token)
+            if (token.nonEmpty && token.startsWith(AUTH_HEADER_PREFIX)) Mono.just(token)
             else Mono.error(new MissingTokenException())
         })
         .map(token => new UsernamePasswordAuthenticationToken(token, token))

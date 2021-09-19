@@ -5,6 +5,8 @@ import com.elmenus.checkout.domain.test.utils.{DataFactory, ValidatorTestSuite}
 import org.junit.jupiter.api.{BeforeEach, Test}
 import reactor.test.StepVerifier
 
+import scala.jdk.CollectionConverters.SeqHasAsJava
+
 class OrderItemsAvailableValidatorTest extends ValidatorTestSuite[OrderItemsAvailableValidator] {
 
     @BeforeEach
@@ -12,9 +14,9 @@ class OrderItemsAvailableValidatorTest extends ValidatorTestSuite[OrderItemsAvai
 
     @Test
     def `Given a basket with its all items are available, when validator validates it, then it should pass the validation`(): Unit = {
-        val basketItems = DataFactory.generateBasketItem() ::
+        val basketItems = (DataFactory.generateBasketItem() ::
             DataFactory.generateBasketItem() ::
-            DataFactory.generateBasketItem() :: Nil
+            DataFactory.generateBasketItem() :: Nil).asJava
 
         StepVerifier
             .create(validator.validate(basketItems))
@@ -24,9 +26,9 @@ class OrderItemsAvailableValidatorTest extends ValidatorTestSuite[OrderItemsAvai
 
     @Test
     def `Given a basket with its some items are not available, when validator validates it, then a ItemNotAvailableException is thrown`(): Unit = {
-        val basketItems = DataFactory.generateBasketItem() ::
+        val basketItems = (DataFactory.generateBasketItem() ::
             DataFactory.generateBasketItem(item = DataFactory.generateItem(available = false)) ::
-            DataFactory.generateBasketItem() :: Nil
+            DataFactory.generateBasketItem() :: Nil).asJava
         val exceptionClass = classOf[ItemNotAvailableException]
 
         StepVerifier

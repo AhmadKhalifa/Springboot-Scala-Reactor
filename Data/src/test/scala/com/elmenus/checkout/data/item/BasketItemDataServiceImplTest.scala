@@ -7,6 +7,9 @@ import org.mockito.Mock
 import org.mockito.Mockito.when
 import reactor.test.StepVerifier
 
+import scala.jdk.CollectionConverters.SeqHasAsJava
+
+
 class BasketItemDataServiceImplTest extends DataServiceTestSuite[BasketItemDataServiceImpl] {
 
     @Mock
@@ -20,9 +23,9 @@ class BasketItemDataServiceImplTest extends DataServiceTestSuite[BasketItemDataS
     @Test
     def `test getAllBasketItemsForUser. Given an existing user, when related items queries from db, then it should return`(): Unit = {
         val user = DataFactory.generateUser()
-        val basketItems = DataFactory.generateBasketItem() ::
+        val basketItems = (DataFactory.generateBasketItem() ::
             DataFactory.generateBasketItem() ::
-            DataFactory.generateBasketItem() :: Nil
+            DataFactory.generateBasketItem() :: Nil).asJava
 
         when(basketItemReactiveRepository.findByUser(user)).thenReturnMono(basketItems)
 

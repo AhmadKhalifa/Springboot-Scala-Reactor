@@ -12,6 +12,8 @@ import org.mockito.Mock
 import org.mockito.Mockito.when
 import reactor.test.StepVerifier
 
+import scala.jdk.CollectionConverters.SeqHasAsJava
+
 class CheckoutOrderUserCaseTest extends UseCaseTestSuite[CheckoutOrderUseCase] {
 
     @Mock
@@ -50,9 +52,9 @@ class CheckoutOrderUserCaseTest extends UseCaseTestSuite[CheckoutOrderUseCase] {
     def `Given valid order, when user tries to checkout, then a payment is returned to the user`(): Unit = {
         val user = DataFactory.generateUser
         val userId = user.id
-        val basketItems = DataFactory.generateBasketItem() ::
+        val basketItems = (DataFactory.generateBasketItem() ::
             DataFactory.generateBasketItem() ::
-            DataFactory.generateBasketItem() :: Nil
+            DataFactory.generateBasketItem() :: Nil).asJava
         val amount = Utils.getTotalAmount(basketItems)
         val payment = DataFactory.generatePayment()
 
@@ -75,9 +77,9 @@ class CheckoutOrderUserCaseTest extends UseCaseTestSuite[CheckoutOrderUseCase] {
     def `Given invalid order(an item is not available), when user tries to checkout, then a is thrown`(): Unit = {
         val user = DataFactory.generateUser
         val userId = user.id
-        val basketItems = DataFactory.generateBasketItem() ::
+        val basketItems = (DataFactory.generateBasketItem() ::
             DataFactory.generateBasketItem(item = DataFactory.generateItem(available = false)) ::
-            DataFactory.generateBasketItem() :: Nil
+            DataFactory.generateBasketItem() :: Nil).asJava
         val exception = new ItemNotAvailableException()
 
         when(userDataService.getById(userId)).thenReturnMono(user)
@@ -95,7 +97,7 @@ class CheckoutOrderUserCaseTest extends UseCaseTestSuite[CheckoutOrderUseCase] {
     def `Given invalid order(less than minimum), when user tries to checkout, then a is thrown`(): Unit = {
         val user = DataFactory.generateUser
         val userId = user.id
-        val basketItems = DataFactory.generateBasketItem(item = DataFactory.generateItem(price = 2)) :: Nil
+        val basketItems = (DataFactory.generateBasketItem(item = DataFactory.generateItem(price = 2)) :: Nil).asJava
         val exception = new OrderTooSmallException()
 
         when(userDataService.getById(userId)).thenReturnMono(user)
@@ -113,7 +115,7 @@ class CheckoutOrderUserCaseTest extends UseCaseTestSuite[CheckoutOrderUseCase] {
     def `Given invalid order(more than maximum), when user tries to checkout, then a is thrown`(): Unit = {
         val user = DataFactory.generateUser
         val userId = user.id
-        val basketItems = DataFactory.generateBasketItem(item = DataFactory.generateItem(price = 2)) :: Nil
+        val basketItems = (DataFactory.generateBasketItem(item = DataFactory.generateItem(price = 2)) :: Nil).asJava
         val exception = new OrderTooLargeException()
 
         when(userDataService.getById(userId)).thenReturnMono(user)

@@ -1,5 +1,8 @@
 package com.elmenus.checkout.application.test.cucumber.utils
 
+import com.elmenus.checkout.application.test.utils.DataFactory
+import com.elmenus.checkout.gateway.user.UserRouterConfiguration
+import com.elmenus.checkout.gateway.user.dto.TokenDTO
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -7,6 +10,13 @@ import reactor.core.publisher.Mono
 
 @Component
 class WebClient(webTestClient: WebTestClient, scenarioData: ScenarioData) {
+
+    def authenticate(username: String, password: String): Unit = {
+        post(UserRouterConfiguration.Endpoints.AUTH, DataFactory.generateCredentialsDto(username, password))
+        responseBody()
+            .expectBody(classOf[TokenDTO])
+            .consumeWith(results => scenarioData.setAuthToken(results.getResponseBody.getFullToken))
+    }
 
     def get(uri: String): Unit = scenarioData
         .set(

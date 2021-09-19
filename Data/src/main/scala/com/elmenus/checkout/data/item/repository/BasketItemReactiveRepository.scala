@@ -12,7 +12,7 @@ class BasketItemReactiveRepository(basketItemRepository: BasketItemRepository)
 
     override protected def repository: BasketItemRepository = basketItemRepository
 
-    def findByUser(user: User): Mono[List[BasketItem]] = Mono
+    def findByUser(user: User): Mono[java.util.List[BasketItem]] = Mono
         .just(user)
         .flatMap(user => Mono.fromCallable(() => repository.findByUser(user)))
         .subscribeOn(jdbcScheduler)
